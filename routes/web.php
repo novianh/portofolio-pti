@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,8 +16,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.site.index');
 });
 
 
+Auth::routes();
+
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::group(['prefix' => 'admin'], function () {
+        Route::get('/', [UserController::class, 'index'])->name('dashboard.index');
+        Route::controller(ProfileController::class)->group(function () {
+            Route::get('/profile', 'index')->name('profile.index');
+            Route::post('/profile/store', 'store')->name('profile.store');
+        });
+        
+        Route::get('/post', [ArticleController::class, 'index'])->name('post.index');
+        Route::post('/post/store', [ArticleController::class, 'store'])->name('post.store');
+        Route::get('/post/slug/', [ArticleController::class, 'slug'])->name('post.slug');
+    });
+});
