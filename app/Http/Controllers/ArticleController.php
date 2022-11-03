@@ -43,7 +43,7 @@ class ArticleController extends Controller
 
     public function slug(Request $request)
     {
-        // $slug = SlugService::createSlug(Article::class, 'slug', $request->title);
-        // return response()->json(['slug' => $slug ]);
+        $slug = SlugService::createSlug(Article::class, 'slug', $request->title);
+        return response()->json(['slug' => $slug]);
     }
 }

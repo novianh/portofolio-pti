@@ -9,7 +9,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 class Article extends Model
 {
     use HasFactory; 
-    // use Sluggable;
+    use Sluggable;
     
     protected $fillable = [
         'title',
