@@ -41,31 +41,21 @@
                                     @enderror
                                 </label>
 
-                                <label for="" class=" block text-sm mt-4">
+                                <div for="" class=" block text-sm mt-4">
                                     <span class=" text-gray-700 dark:text-gray-400">Banner</span>
-                                    <div class="flex justify-center items-center w-full">
-                                        <label for="dropzone-file"
-                                            class="flex flex-col justify-center items-center w-full h-10 bg-purple-50 rounded-lg border-2 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:border-gray-600 dark:bg-gray-700 hover:bg-gray-100  dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                            <div class="flex flex-col justify-center items-center pt-5 pb-6">
-                                                <svg aria-hidden="true" class="mb-3 w-8 text-gray-400" fill="none"
-                                                    stroke="currentColor" viewBox="0 0 24 24"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
-                                                    </path>
-                                                </svg>
-                                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span
-                                                        class="font-semibold">Click to upload</span> or drag and drop</p>
-                                                <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF
-                                                    (MAX.
-                                                    800x400px)</p>
-                                            </div>
-                                            <input id="dropzone-file" type="file" class="hidden">
-                                        </label>
+                                    <div class="flex w-10 h-10">
+                                        <div for="dropzone-file"
+                                            class="flex flex-col bg-purple-50 rounded-lg border-2 border-dashed cursor-pointer dark:hover:bg-gray-800">
+                                            <input name="image" type="file"
+                                                class="dropify text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
+                                                data-show-errors="true" data-allowed-file-extensions="jpeg jpg png"
+                                                data-max-file-size-preview="3M" />
+                                        </div>
                                     </div>
-                                </label>
+                                </div>
 
-                                <label class="block text-sm mt-4">
+
+                                <div class="block text-sm mt-4">
                                     <span class="text-gray-700 dark:text-gray-400">Content</span>
                                     <div class="mt-1">
                                         <input id="content" type="hidden" name="content">
@@ -78,7 +68,15 @@
                                             {{ $errors->first('content') }}
                                         </p>
                                     @enderror
-                                </label>
+                                </div>
+
+                                <div for="purple-toggle" class="inline-flex relative items-center mr-5 cursor-pointer">
+                                    <input type="checkbox" value="" id="purple-toggle" class="sr-only peer" checked>
+                                    <div
+                                        class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-purple-300 dark:peer-focus:ring-purple-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-purple-600">
+                                    </div>
+                                    <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Purple</span>
+                                </div>
 
                                 <div class="bg-gray-50 dark:bg-gray-700 px-4 py-3 text-right sm:px-6 mt-8">
                                     <button type="submit"
@@ -100,7 +98,7 @@
                         @foreach ($post as $p)
                             <div class="mt-8 flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                                 <div
-                                    class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-lg dark:text-orange-100 dark:bg-orange-500">
+                                    class="p-3 mr-4 text-orange-500 bg-purple-100 rounded-lg dark:text-orange-100 dark:bg-purple-600">
                                     <div class="shrink-0">
                                         <img class="h-12 w-12" src="{{ url('storage/post/' . $p->image) ?? '' }}"
                                             alt="banner">
@@ -133,5 +131,9 @@
                 .then(data => slug.value = data.slug)
             console.log('ol');
         })
+
+        $('.dropify').dropify(
+
+        );
     </script>
 @endsection

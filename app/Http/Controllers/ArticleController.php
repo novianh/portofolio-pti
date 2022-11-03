@@ -13,7 +13,7 @@ class ArticleController extends Controller
     public function index()
     {
         return \view('layouts.admin.post', [
-            'post' => Article::all()
+            'post' => Article::latest()->get()
         ]);
     }
 
@@ -33,7 +33,15 @@ class ArticleController extends Controller
         $validatedData = $request->only([
             'title', 'slug', 'content'
         ]);
+        $image = $request->file('image');
+        $filename = "pst_" . uniqid() . "." . $image->getClientOriginalExtension();
+        $tujuan_upload = 'public/post';
+        $image->storeAs($tujuan_upload, $filename);
+
+
         $validatedData['excerpts'] = Str::limit(strip_tags($request->content), 100);
+        $validatedData['image'] = $filename;
+
 
         // \dd($validatedData);
         Article::create($validatedData);
