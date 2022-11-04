@@ -1,5 +1,14 @@
 @extends('layouts.master')
 
+@section('css')
+    <style>
+        input:checked~.dot {
+            transform: translateX(100%);
+            background-color: #48bb78;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="container px-6 mx-auto grid">
 
@@ -11,13 +20,13 @@
                         <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
                             Add Post
                         </h4>
-                        <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                        <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-700">
                             <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <label class="block text-sm">
                                     <span class="text-gray-700 dark:text-gray-400">Title</span>
                                     <input name="title" id="title"
-                                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input  @if ($errors->has('title')) border border-red-500 @endif"
+                                        class="block rounded-lg w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-none form-input  @if ($errors->has('title')) border border-red-500 @endif"
                                         placeholder="Post title ..." value="{{ old('title') }}" />
 
                                     @error('title')
@@ -70,13 +79,20 @@
                                     @enderror
                                 </div>
 
-                                <div for="purple-toggle" class="inline-flex relative items-center mr-5 cursor-pointer">
-                                    <input type="checkbox" value="" id="purple-toggle" class="sr-only peer" checked>
-                                    <div
-                                        class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-purple-300 dark:peer-focus:ring-purple-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-purple-600">
-                                    </div>
-                                    <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Purple</span>
+
+                                <legend>Published status</legend>
+
+                                <input id="draft" class="peer/draft" type="radio" name="status" checked />
+                                <label for="draft" class="peer-checked/draft:text-sky-500">Draft</label>
+
+                                <input id="published" class="peer/published" type="radio" name="status" />
+                                <label for="published" class="peer-checked/published:text-sky-500">Published</label>
+
+                                <div class="hidden peer-checked/draft:block">Drafts are only visible to administrators.
                                 </div>
+                                <div class="hidden peer-checked/published:block">Your post will be publicly visible on your
+                                    site.</div>
+
 
                                 <div class="bg-gray-50 dark:bg-gray-700 px-4 py-3 text-right sm:px-6 mt-8">
                                     <button type="submit"
@@ -98,7 +114,7 @@
                         @foreach ($post as $p)
                             <div class="mt-8 flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                                 <div
-                                    class="p-3 mr-4 text-orange-500 bg-purple-100 rounded-lg dark:text-orange-100 dark:bg-purple-600">
+                                    class="p-3 mr-4 text-orange-500 bg-purple-100 rounded-lg dark:text-orange-100 dark:bg-purple-500">
                                     <div class="shrink-0">
                                         <img class="h-12 w-12" src="{{ url('storage/post/' . $p->image) ?? '' }}"
                                             alt="banner">
