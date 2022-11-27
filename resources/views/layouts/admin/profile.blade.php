@@ -1,10 +1,6 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+@extends('layouts.master')
 
+@section('content')
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -21,7 +17,7 @@
 
                             </div>
                             <div class="mt-5 md:col-span-2 md:mt-0">
-                                <form action="{{ route('profile.storeProfile') }}" method="POST"
+                                <form action="{{ route('profile.store') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $profile->id ?? '' }}">
@@ -41,7 +37,7 @@
                                                 <div class="mt-1 flex items-center">
                                                     <span
                                                         class="inline-block h-20 w-20 overflow-hidden rounded-full bg-gray-100">
-                                                        
+
                                                         @if (!$profile)
                                                             <svg class="h-full w-full text-gray-300" fill="currentColor"
                                                                 viewBox="0 0 24 24">
@@ -49,7 +45,8 @@
                                                                     d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
                                                             </svg>
                                                         @else
-                                                            <img id="preview-image-before-upload" src="{{ url('storage/profile/' . $profile->image) }}"
+                                                            <img id="preview-image-before-upload"
+                                                                src="{{ url('storage/profile/' . $profile->image) }}"
                                                                 alt="" width="100%">
                                                         @endif
                                                     </span>
@@ -121,7 +118,7 @@
                                         </div>
                                         <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
                                             <button type="submit" id="btn"
-                                                class="btn inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm focus:outline-none cursor-pointer focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>
+                                                class="btn inline-flex justify-center rounded-md border border-transparent bg-purple-600 py-2 px-4 text-sm font-medium text-white shadow-sm focus:outline-none cursor-pointer focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">Save</button>
                                         </div>
                                     </div>
                                 </form>
@@ -132,7 +129,6 @@
             </div>
         </div>
     </div>
-
 
     <script>
         $(document).ready(function(e) {
@@ -146,7 +142,7 @@
             });
 
             $('#profile_upload').change(function() {
- console.log('ok');
+                console.log('ok');
                 let reader = new FileReader();
 
                 reader.onload = (e) => {
@@ -160,4 +156,4 @@
 
         });
     </script>
-</x-app-layout>
+@endsection

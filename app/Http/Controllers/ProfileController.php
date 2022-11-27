@@ -3,18 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Console\View\Components\Alert;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    public function indexProfile()
+    public function index()
     {
         return \view('layouts.admin.profile', [
             'profile' => User::latest()->first()
         ]);
     }
 
-    public function storeProfile(Request $request)
+    public function store(Request $request)
     {
         // \dd($request);
         $request->validate(
@@ -70,7 +71,7 @@ class ProfileController extends Controller
                 'image' => $image_name,
             ]);
         }
-        return redirect()->route('profile.indexProfile')
-            ->with('success_message', 'Your Action Success');
+        return \to_route('dashboard.index')
+            ->with('success', 'Update Profile Success');
     }
 }
